@@ -112,7 +112,12 @@ exports.user_signin = function(req, res){
         
         if(org !== null){
             let userSigningIn = org.users.filter(user =>
-                 (user.name === req.body.userEmail || user.email === req.body.userEmail))[0]
+		    (user.name === req.body.userEmail || user.email === req.body.userEmail))[0]
+	
+	    if(userSigningIn === undefined)
+		return res.status(500).send({
+			status: "failed",
+		})
 
             const isPasswordValid = bcrypt.compareSync(
                 req.body.userPassword,
