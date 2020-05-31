@@ -14,10 +14,6 @@ module.exports = function(app, urlPrefix){
         // res.type('application/json')
         next();
     })
-
-    app.get(urlPrefix+'/test', (req, res) => orgs.test(req, res))
-    app.get(urlPrefix+'/get', [authJwt.verifyToken],
-        (req, res) => orgs.get(req, res))
     
     app.get(urlPrefix+'/getNavbarTablesData', [authJwt.verifyToken], (req, res) => orgs.getNavbarTablesData(req, res))
     app.get(urlPrefix+'/get_table_data', [authJwt.verifyToken], (req, res) => orgs.get_table_data(req, res))

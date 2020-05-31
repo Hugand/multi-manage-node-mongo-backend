@@ -8,51 +8,6 @@ const config = require("../config/auth.config")
 
 const N_ROWS_PER_PAGE = 15
 
-exports.test = function(req, res){
-
-    let newOrg = new Orgs({
-        name: "new org",
-        email: "neworg@org.vom",
-        name_id: "new_od",
-        password: bcrypt.hashSync("123123", 8),
-        tables: [
-            new Tables({
-                data: [],
-                fields: [],
-                name: "New table",
-            })
-        ],
-        users: [
-            new Users({
-                admin: true,
-                email: "new_user@email.com",
-                jobRole: "CEO",
-                name: "ugu",
-                phone: "012912912",
-                username: "ugomes",
-                password: bcrypt.hashSync("123123", 8),
-            })
-        ]
-    })
-
-    newOrg.save((err) => {
-        if(err){
-            console.log(err)
-            res.status(500).send('err')
-        }else
-            res.status(200).send(newOrg)
-    })
-}
-
-exports.get = function (req, res){
-    Orgs.find({}).exec((err, orgs) => {
-        if(err)
-            return res.send(500, err)
-        
-        res.send(orgs)
-    })
-}
-
 exports.getNavbarTablesData = function(req, res){
     Orgs.findById(req.query.orgId, (err, org) => {
         if(err)
@@ -232,6 +187,7 @@ exports.update_table_fields = function(req, res){
                         })[0]
                         field.select_data = reqFieldData.select_data
                         field.display_table = reqFieldData.display_table
+                        field.type =  reqFieldData.type
                     })
                     org.markModified('tables')
                     await org.save()
