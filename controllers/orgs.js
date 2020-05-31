@@ -214,7 +214,7 @@ exports.add_table_field = function(req, res){
             name: req.body.fieldName,
             type: req.body.fieldType,
             select_data: req.body.selectData,
-            display_table: (req.body.displayTable === "true")
+            display_table: req.body.displayTable
         }
         
         for(let i = 0; i < org.tables.length; i++){
